@@ -20,9 +20,10 @@ class JuliusReceiver:
                 rate.sleep()
 
         rospy.on_shutdown(self.sock.close)
-        # 速度をパブリッシュする
-        # self.twist_pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 10)
-        self.twist_pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size = 10)
+        # 速度をパブリッシュする(roomba)
+        self.twist_pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 10)
+        # 速度をパブリッシュする(turtlesim)
+        # self.twist_pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size = 10)
         self.twist = Twist()
 
     def get_line(self):
@@ -129,15 +130,6 @@ class JuliusReceiver:
             # 女性の声で発話
             cmd6w = ["/home/srd-gtune/catkin_ws/src/ros_voice/src/jtalk_woman.sh","ルンバです"]
             subprocess.call(cmd6w)
-            rospy.sleep(1)
-            self.twist = Twist()
-            self.twist_pub.publish(self.twist)
-            rospy.sleep(1)
-
-        elif "オッケイタケカワ" in line:
-            # 男性の声で発話
-            cmd7m = ["/home/srd-gtune/catkin_ws/src/ros_voice/src/jtalk_man.sh","タケカワです"]
-            subprocess.call(cmd7m)
             rospy.sleep(1)
             self.twist = Twist()
             self.twist_pub.publish(self.twist)
